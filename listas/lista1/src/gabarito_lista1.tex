@@ -1,0 +1,129 @@
+\documentclass[a4paper,11pt]{article} % Formato do papel, tipo de documento e tamanho da fonte.
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[brazil]{babel} % Hifenização em português
+\usepackage[T1]{fontenc} % Caracteres com acentos são considerados como um bloco
+\usepackage{ae} % Arruma a fonte quando usa o pacote acima
+\usepackage{amssymb} % Caracteres matemáticos especiais
+\usepackage[pdftex]{graphicx} % Para inserir figuras    
+\usepackage{titlesec}
+\usepackage[section]{placeins}
+\usepackage{listings}
+
+
+%\usepackage{graphicx}
+%\renewcommand{\theenumi}{\Alph{enumi}}
+%\setcounter{section}{-1}
+
+%\titleformat{\chapter}{\normalfont\LARGE}{}{20pt}{\LARGE\textbf}
+
+
+
+\title{
+	\textbf{
+        Criptografia para Segurança de Dados \\
+        Gabarito da Lista 1
+    }
+}
+
+\author	{
+	\bf{Thales Paiva}     \\
+	thalespaiva@gmail.com       \\
+}
+
+\date{29/04/2014}
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section{Exercício 1}
+\mbox{}
+
+Escrever todos os valores de $ i $, $ u_i $, $ v_i $, $ a_i $ e $ b_i $  quando o Algoritmo de Euclides Estendido é aplicado com entrada $ (3540, 714) $.
+
+\paragraph{Resolução:}
+A tabela abaixo mostra a execução do algoritmo com os parâmetros pedidos. Note que os valores de $ a_i $ e $ b_i $ estão relacionados aos de $ x_{i-2} $ e $ x_{i-1} $.
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{$ i $} & \textbf{$ x_{i-2} $} & \textbf{$ x_{i-1} $} & \textbf{$ q_i $} & \textbf{$ x_i \leftarrow x_{i-2} \bmod x_{i-1} $} & \textbf{$ u_{i} $} & \textbf{$ v_i $} \\ \hline
+-2    &                      &                      &                  &                                                   & 1                  & 0                \\ \hline
+-1             &                      &                      &                  &                                                   & 0                  & 1                \\ \hline
+0              & 3540                 & 714                  & 4                & 684                                               & 1                  & -4               \\ \hline
+1              & 714                  & 684                  & 1                & 30                                                & -1                 & 5                \\ \hline
+2              & 684                  & 30                   & 22               & 24                                                & 23                 & -114             \\ \hline
+3              & 30                   & 24                   & 1                & 6                                                 & \textbf{-24}       & \textbf{119}     \\ \hline
+4              & 24                   & 6                    & 4                & 0                                                 & 119                & -590             \\ \hline
+5              & 6           & 0                    &                  &                                                   &                    & \textbf{}        \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Exercício 2}
+\mbox{}
+
+Utilizando o Algoritmo de Euclides estendido (pg. 244 do livro) calcular $ 3541^{-1} \bmod 119 $.
+
+\paragraph{Resolução:}
+Note que $ 3541^{-1} \bmod 119 $ existe se e somente se $ mdc(3541, 119) = 1 $. Ainda, se este for o caso, o Algoritmo de Euclides Estendido aplicado a $ (3541, 119) $ calculará $ u, v \in \mathbb{Z} $ tais que:
+$$ 3541u + 119v = 1 \Rightarrow 3541u = 1 \bmod 119 \Rightarrow u = 3541^{-1} \bmod 119 $$
+
+A tabela abaixo mostra a aplicação do Algoritmo de Euclides Estendido aplicado a $ (3541, 119) $:
+\begin{table}[h]
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{$ i $} & \textbf{$ x_{i-2} $} & \textbf{$ x_{i-1} $} & \textbf{$ q_i $} & \textbf{$ x_i \leftarrow x_{i-2} \bmod x_{i-1} $} & \textbf{$ u_{i} $} & \textbf{$ v_i $} \\ \hline
+-2             &                      &                      &                  &                                                   & 1                  & 0                \\ \hline
+-1             &                      &                      &                  &                                                   & 0                  & 1                \\ \hline
+0              & 3541                 & 119                  & 29               & 90                                                & 1                  & -29              \\ \hline
+1              & 119                  & 90                   & 1                & 29                                                & -1                 & 30               \\ \hline
+2              & 90                   & 29                   & 3                & 3                                                 & 4                  & -119             \\ \hline
+3              & 29                   & 3                    & 9                & 2                                                 & -37                & 1101             \\ \hline
+4              & 3                    & 2                    & 1                & 1                                                 & \textbf{41}        & \textbf{-1220}   \\ \hline
+5              & 2                    & 1                    & 2                & 0                                                 &                    &                  \\ \hline
+\end{tabular}
+\end{table}
+
+Como $ 3541\times41 + 119\times(-1220) = 1 $, temos que $ 3541^{-1} \bmod 119 = 41 $.
+
+
+\section{Exercício 3}
+\mbox{}
+
+Dado que $ N = 8 \bmod 17  $ e $ N = 4 \bmod 31 $, utilizando o Teorema Chinês do Resto (pg. 247 do livro) calcular $ N \bmod (17 \times 31) $.
+
+\paragraph{Resolução:}
+Pela aplicação do Algoritmo de Euclides Estendido, temos que:
+
+$$ 1 = mdc(17, 31) = 11 \times 17 + (-6) \times 31 $$
+
+Pelo Teorema Chinês do Resto, temos que:
+$$ N = 4 \times 11 \times 17 + 8 \times (-6) \times 31 = -740 \bmod (17 \times 31) $$ 
+
+Fazendo a redução a $ \mathbb{Z}_{17 \times 31} = \mathbb{Z}_{527}, temos:$
+$$ N = -740 = -213 = 314 \bmod (17 \times 31) $$
+
+
+
+\section{Exercício 4}
+\mbox{}
+
+
+Relacionado ao Algoritmo RSA, dadas a fatoração de $ n = qr = 17 \times 31 $ e a chave pública p = 433, calcular a chave particular $ s $ utilizando as fórmulas $ \Phi (qr) = (q - 1)(r - 1) $ e $ s = p^{-1} \bmod \Phi(qr) $ (pg. 128 do livro).
+
+\paragraph{Resolução:}
+Do enunciado: $$ s = 433^{-1} \bmod \Phi(17 \times 31) = 433^{-1} \bmod (16 \times 30) = 433^{-1} \bmod 480 $$
+
+Pelo algoritmo de Euclides Estendido aplicado a $ (433, 480) $, temos que:
+$$ (-143) \times 433 + 129 \times 480 = 1 \Rightarrow -143 = 433^{-1} \bmod 480 $$
+
+Reduzindo -143 a $ \mathbb{Z}_{480} $, temos:
+$$ -143 = 337 \bmod 480 $$
+
+
+
+\mbox{}
+
+\end{document}
